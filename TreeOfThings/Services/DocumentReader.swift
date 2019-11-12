@@ -15,32 +15,39 @@ struct Heading: Equatable, Hashable, Identifiable {
     let title: String
 }
 
-struct DocumentReader {
-    var doc: Document;
+class DocumentReader: Identifiable {
+    let nr: Int = Int.random(in: 1..<10000000)
+    let doc: Document
+
+    var id: String {
+        get {
+            return doc.title ?? "Untitled \(nr)"
+        }
+    }
     
     init(_ doc: Document) {
-        self.doc = doc;
+        self.doc = doc
     }
     
     func title() -> String {
-        return doc.title ?? "Untitled";
+        return self.id
     }
     
     func tableOfContents() -> [Heading] {
         var count = 0
-        var headings: [Heading] = [];
-        var queue: [Node] = doc.content;
+        var headings: [Heading] = []
+        var queue: [Node] = doc.content
         while !queue.isEmpty {
             let top = queue.removeFirst()
             if top is Section {
-                let section = top as! Section;
+                let section = top as! Section
                 queue.insert(contentsOf: section.content, at: 0)
                 if let title = section.title {
-                    headings.append(Heading(id: count, level: section.stars - 1, title: title));
+                    headings.append(Heading(id: count, level: section.stars - 1, title: title))
                     count += 1
                 }
             }
         }
-        return headings;
+        return headings
     }
 }

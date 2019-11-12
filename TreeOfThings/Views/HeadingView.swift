@@ -9,24 +9,66 @@
 import SwiftUI
 
 struct HeadingView: View {
-    let title: String
+    let rawTitle: String;
     let padding: Int
     let prefix: String
+    @State var done: Bool = false
+
+    var title: String {
+        get {
+            return isToggle() ? String(self.rawTitle.dropFirst(4)) : self.rawTitle
+        }
+    }
 
     init(_ title: String, padding: Int = 0) {
-        self.title = title
+        self.rawTitle = title
         self.padding = padding
         self.prefix = String(repeating: "*", count: self.padding + 1)
     }
     
     var body: some View {
-        HStack(alignment: .center) {
-            Text(title)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .padding(.leading, CGFloat(15 + padding * 15))
-                .font(.title)
+        if isToggle() {
+            return AnyView(Toggle(isOn: $done) { heading })
+        } else {
+            return AnyView(heading)
         }
+    }
+
+    private var heading: some View {
+        Text(title)
+            .lineLimit(1)
+            .truncationMode(.tail)
+            .padding(.leading, CGFloat(HeadingView.PADDING_STEP * (padding + 1)))
+            .font(fontSize(forPadding: padding))
+    }
+
+    private static let PADDING_STEP = 15
+    
+    private static let FONT_SIZES = [
+        Font.largeTitle,
+        Font.title,
+        Font.headline,
+        Font.body,
+        Font.subheadline,
+    ]
+    
+    private func fontSize(forPadding: Int) -> Font {
+        if (forPadding < HeadingView.FONT_SIZES.count) {
+            return HeadingView.FONT_SIZES[forPadding]
+        }
+        return HeadingView.FONT_SIZES.last ?? Font.body
+    }
+
+    private func isToggle() -> Bool {
+       return isOn() || isOff()
+    }
+
+    private func isOn() -> Bool {
+        return rawTitle.starts(with: "[X] ")
+    }
+
+    private func isOff() -> Bool {
+        return rawTitle.starts(with: "[ ] ")
     }
 }
 

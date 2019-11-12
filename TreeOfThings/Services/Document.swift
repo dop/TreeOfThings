@@ -17,19 +17,24 @@ enum DocumentState {
     case fail(Error)
 }
 
-struct DocumentService {
+enum DocumentError: Error {
+    case notfound(String)
+}
+
+class DocumentService {
     let parser = OrgParser()
     
-    func empty() -> DocumentState {
-        return DocumentState.empty;
+    func parse(resource: String) -> DocumentState {
+        guard let path = Bundle.main.path(forResource: resource, ofType: "org") else {
+            return .fail(DocumentError.notfound(resource))
+        }
+        return self.parse(path: path)
     }
     
-    func parse(resource: String) -> DocumentState {
-        let path = Bundle.main.path(forResource: resource, ofType: "org")
+    func parse(path: String) -> DocumentState {
         do {
-            return self.parse(content: try String(contentsOfFile: path!, encoding: .utf8));
+            return self.parse(content: try String(contentsOfFile: path, encoding: .utf8));
         } catch {
-            print(error)
             return .fail(error)
         }
     }

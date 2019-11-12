@@ -1,0 +1,8 @@
+#+TITLE: Work TODOs
+
+* TODO Hello
+** [X] World
+*** [ ] Lorem
+* Sit
+** Ipsum
+* DONE Dolor

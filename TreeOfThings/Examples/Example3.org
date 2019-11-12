@@ -1,0 +1,15 @@
+#+TITLE: Grocery Shopping
+
+* TODO Breakfast
+** [ ] Bread
+** [ ] Cheese
+** [ ] Milk
+** [ ] Tomatoes
+** [ ] Butter
+** [ ] Blueberry Jam
+* TODO Dinner
+** [ ] Carrots
+** [ ] Potatoes
+** [ ] Chickpeas
+** [ ] Soup Spices
+** [ ] Cucumber
