@@ -1,0 +1,16 @@
+PODS:
+  - SwiftOrg (0.7.9)
+
+DEPENDENCIES:
+  - SwiftOrg
+
+SPEC REPOS:
+  trunk:
+    - SwiftOrg
+
+SPEC CHECKSUMS:
+  SwiftOrg: da2e76afe1e11d7b6b5d349237a8b7362ff94634
+
+PODFILE CHECKSUM: 49755b62f26a2f03300802086aafaf03d946754e
+
+COCOAPODS: 1.8.4

@@ -1,0 +1,6 @@
+framework module SwiftOrg {
+  umbrella header "SwiftOrg-umbrella.h"
+
+  export *
+  module * { export * }
+}

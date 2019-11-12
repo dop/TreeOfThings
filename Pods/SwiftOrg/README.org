@@ -1,0 +1,226 @@
+#+TITLE: SwiftOrg
+
+* org-mode Parser for Swift
+
+  [[https://travis-ci.org/xiaoxinghu/swift-org.svg?branch=master]]
+  [[https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000]]
+  [[https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat]]
+  [[https://img.shields.io/github/release/xiaoxinghu/swift-org.svg?maxAge=2592000]]
+
+  [[http://orgmode.org/][org-mode]] is awesome. This is the first step to bring it to iOS, (arguably) the
+  most popular platform on the planet.
+
+* Usage
+  An simple example will explain everything.
+
+  #+BEGIN_SRC swift
+    import SwiftOrg
+
+    let lines = [
+        "* TODO head line",
+        "  A normal line here.",
+    ]
+    let parser = OrgParser()
+    let doc = try parser.parse(lines: lines)
+  #+END_SRC
+
+* Supported Syntax (so far) [17/19]
+** DONE Affiliated Keywords (aka In Buffer Settings)
+   CLOSED: [2016-09-03 Sat 12:47]
+
+   #+BEGIN_SRC org
+   #+TITLE: Hello World
+   #+OPTIONS: Hello World
+   #+END_SRC
+
+** DONE Headlines
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   * Head Line 1
+   * Head Line 2
+   ** Head Line 2.1
+   *** Head Line 2.1.1
+   #+END_SRC
+
+** DONE TODO Keywords
+   CLOSED: [2016-12-31 Sat 14:12]
+   #+BEGIN_SRC org
+     ,#+TODO: TODO NEXT | DONE
+
+     ,* TODO Head Line 1
+     ,* NEXT Head Line 2
+     ,** DONE Head Line 2.1
+        CLOSED: [2016-12-31 Sat 14:12]
+   #+END_SRC
+
+** DONE [#A] Priority
+   CLOSED: [2016-09-30 Fri 12:17]
+   #+BEGIN_SRC org
+     ,* TODO [#A] Top Priority Task
+     ,* [#B] Medium Priority Item
+     ,* TODO [#c] Low Priority Task
+     ,* TODO [#D] No Priority Task
+   #+END_SRC
+
+** DONE Tags
+   CLOSED: [2016-09-30 Fri 14:52]
+
+   #+BEGIN_SRC org
+     ,* Section with One Tag                                                :tag1:
+     ,* Section with multiple tags                                 :tag1:tag2:tag3:
+   #+END_SRC
+
+** DONE Planning
+   CLOSED: [2017-01-09 Mon 16:09]
+
+   #+BEGIN_SRC org
+     ,* DONE Closed task
+       CLOSED: [2017-01-09 Mon 15:58]
+
+     ,* Scheduled task
+       SCHEDULED: <2017-01-09 Mon>
+
+     ,* TODO task that has a deadline
+       DEADLINE: <2017-01-16 Mon +1w>
+   #+END_SRC
+
+** DONE Paragraph
+   CLOSED: [2016-09-03 Sat 12:47]
+   Lines without *line breaker* becomes a *paragraph*.
+
+** DONE Emphasis
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   *bold*
+   /italic/
+   _underlined_
+   =verbatim=
+   ~code~
+   +strike-through+
+   #+END_SRC
+
+** DONE Link
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   [[google][https://www.google.com]]
+   #+END_SRC
+
+** DONE List
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   # ordered list
+   1. first
+   2) second
+   3. 3rd
+
+   # unordered list
+   - item
+   + item
+   * item
+
+   # nested list
+   - item
+     1. sub item
+     1) sub item
+   - item
+   #+END_SRC
+
+** DONE Horizontal rules
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   Above.
+   -----
+   Below
+   #+END_SRC
+
+** DONE Comment
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   # This is a comment.
+   #This is a regular line.
+   #+END_SRC
+
+** DONE Blocks
+   CLOSED: [2016-09-03 Sat 12:47]
+   #+BEGIN_SRC org
+   ,#+BEGIN_SRC javascript
+     Console.log("Hello Org.")
+   ,#+END_SRC
+
+   ,#+BEGIN_QUOTE
+   Everything should be made as simple as possible,
+   but not any simpler -- Albert Einstein
+   ,#+END_QUOTE
+   #+END_SRC
+
+** DONE Drawer
+   CLOSED: [2016-09-20 Tue 22:38]
+   :PROPERTIES:
+   :END:
+
+   Drawer for headlines.
+
+   #+BEGIN_SRC org
+     ,* WAITING Talk to Jake
+       :PROPERTIES:
+       :CATEGORY: personal
+       :END:
+       :LOGBOOK:
+       - State "WAITING"    from "TODO"       [2016-09-20 Tue 22:41] \\
+         waiting for call from Jake
+       :END:
+   #+END_SRC
+
+** DONE Footnote
+   CLOSED: [2016-09-27 Tue 21:24]
+   #+BEGIN_SRC org
+   This is a footnote right here[fn:1]. And this is the rest.
+
+   [fn:1] The content of the footnote here.
+   #+END_SRC
+
+** DONE Checkbox
+   CLOSED: [2016-09-27 Tue 21:28]
+   Checkboxes in list items.
+   #+BEGIN_SRC org
+     - [X] item one checked
+     - [-] item two not checked
+     - [ ] item three not checked
+   #+END_SRC
+
+** DONE Table
+   CLOSED: [2017-01-31 Tue 20:15]
+   #+BEGIN_SRC org
+     | Name         | Species    | Gender | Role         |
+     |--------------+------------+--------+--------------|
+     | Bruce Wayne  | Human      | M      | Batman       |
+     | Clark Kent   | Kryptonian | M      | Superman     |
+     | Diana Prince | Amazonian  | F      | Wonder Woman |
+   #+END_SRC
+
+** TODO Clock
+
+** TODO Attachments
+
+* [#c] Maybe? [0/2]
+  - [ ] Latex Support
+  - [ ] Macros
+
+* TODO Performance Test
+
+* Contribute
+  SwiftOrg is written in Swift 3. So you need xcode 8 to be able to build it.
+** Setup
+   #+BEGIN_SRC bash
+     ./bin/setup
+     ./bin/test
+   #+END_SRC
+** TODO Release
+   To bump up version number.
+   #+BEGIN_SRC sh :results silent
+     agvtool new-marketing-version 0.7.9
+     sed -i.bak "s/s\.version = .*/s\.version = '0\.7\.9'/" SwiftOrg.podspec
+   #+END_SRC
+
+* License
+  Carthage is released under the [[https://github.com/xiaoxinghu/swift-org/blob/master/LICENSE][MIT LIcense]].
