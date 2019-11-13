@@ -11,23 +11,28 @@ import Foundation
 enum Resource<T> {
     case uninitialized
     case loading
-    case loaded(T)
+    case ok(T)
     case failed(Error)
     
     func ifLoaded(_ f: (T) -> Void) -> Void {
-        return self.withLoaded({ f($0) })
+        let _ = self.mapLoaded({ f($0) })
     }
 
     func mapLoaded<X>(_ f: (T) -> X) -> Resource<X> {
-        return self.withLoaded({ .loaded(f($0)) })
+        switch self {
+            case .ok(let resource):
+                return .ok(f(resource))
+            default:
+                return self as! Resource<X>
+        }
     }
     
-    func withLoaded<X>(_ f: (T) -> X) -> X {
+    func get() throws -> T {
         switch self {
-        case .loaded(let resource):
-            return f(resource)
-        default:
-            return self as! X
+            case .ok(let value):
+                return value
+            default:
+                fatalError("Resource (\(self)) is not loaded")
         }
     }
 }

@@ -9,7 +9,7 @@ struct DocumentOverview: View {
     
     var body: some View {
         List(document.headingList) { heading in
-            NavigationLink (destination: SubtreeView(title: heading.title)) {
+            NavigationLink (destination: SubtreeView(heading: heading)) {
                 HeadingView(heading)
             }
         }
@@ -24,7 +24,7 @@ struct DocumentOverview_Previews: PreviewProvider {
     
     private static func parseExample(_ resource: String) throws -> Document {
         switch (DocumentService().parse(resource: resource)) {
-        case .loaded(let org):
+        case .ok(let org):
             return org.toDocument()
         default:
             fatalError("Failed to parse resource \"\(resource)\".")

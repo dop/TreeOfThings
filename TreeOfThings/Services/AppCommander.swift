@@ -37,7 +37,7 @@ class AppCommander {
 
     func loadDocuments() {
         DispatchQueue.main.async(execute: {
-            self.state.documents = Resource.loaded(self.repository.getExamples())
+            self.state.documents = Resource.ok(self.repository.getExamples())
         })
     }
 

@@ -50,7 +50,7 @@ extension OrgParser {
             switch token {
             case let .setting(key, value):
                 _ = tokens.dequeue()
-                document.settings[key] = value
+                document.settings[key.uppercased()] = value
             default:
                 if let node = try parseSection(index) {
                     document.content.append(node)

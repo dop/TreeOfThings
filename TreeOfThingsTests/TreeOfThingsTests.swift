@@ -10,6 +10,7 @@ import XCTest
 @testable import TreeOfThings
 
 class TreeOfThingsTests: XCTestCase {
+    private let documentService = DocumentService()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,9 +20,25 @@ class TreeOfThingsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testParsingEmptyDocument() {
+        XCTAssertEqual(try getDocument(""), Document("Untitled"))
+    }
+
+    func testParsingDocumentWithTitleOnly() {
+        XCTAssertEqual(try getDocument("#+TITLE: A"), Document("A"))
+    }
+
+    func testParsingDocumentWithSingleHeading() {
+        let doc = try! getDocument("* Hello World");
+        let expected = Document("Untitled", toc: [Tree(Heading("Hello World"))])
+        XCTAssertEqual(doc, expected)
+    }
+
+    private func getDocument(_ content: String) throws -> Document {
+        return try documentService
+            .parse(content: content)
+            .mapLoaded({ $0.toDocument() })
+            .get()
     }
 
 //    func testPerformanceExample() {

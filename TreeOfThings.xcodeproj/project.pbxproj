@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B4C3D67237ACE7F00A7DE8F /* Example3.org in Resources */ = {isa = PBXBuildFile; fileRef = 3B4C3D65237ACE7F00A7DE8F /* Example3.org */; };
 		3B4C3D68237ACE7F00A7DE8F /* Example4.org in Resources */ = {isa = PBXBuildFile; fileRef = 3B4C3D66237ACE7F00A7DE8F /* Example4.org */; };
-		3B4C3D6B237ACE9800A7DE8F /* Example1.org in Resources */ = {isa = PBXBuildFile; fileRef = 3B4C3D69237ACE9800A7DE8F /* Example1.org */; };
 		3B4C3D6C237ACE9800A7DE8F /* Example2.org in Resources */ = {isa = PBXBuildFile; fileRef = 3B4C3D6A237ACE9800A7DE8F /* Example2.org */; };
+		3BA65FEF237C3297004CEACF /* src_blog_2018_08_08_blogging-with-org-mode.org in Resources */ = {isa = PBXBuildFile; fileRef = 3BA65FEE237C3297004CEACF /* src_blog_2018_08_08_blogging-with-org-mode.org */; };
 		3BC62C3A237ACCDB00CCE91A /* DocumentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC62C39237ACCDB00CCE91A /* DocumentRepository.swift */; };
 		3BD42583237AE44000F1F927 /* SubtreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD42582237AE44000F1F927 /* SubtreeView.swift */; };
 		3BD42586237AFC9300F1F927 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD42585237AFC9300F1F927 /* AppState.swift */; };
@@ -24,7 +24,6 @@
 		430E68BD2379653E00B96D78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430E68BB2379653E00B96D78 /* LaunchScreen.storyboard */; };
 		430E68C82379653E00B96D78 /* TreeOfThingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430E68C72379653E00B96D78 /* TreeOfThingsTests.swift */; };
 		430E68D82379939C00B96D78 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430E68D72379939C00B96D78 /* Document.swift */; };
-		430E68E023799DDA00B96D78 /* DocumentReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430E68DF23799DDA00B96D78 /* DocumentReaderTests.swift */; };
 		43251BF4237A9CCC00F1E7AA /* DocumentOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43251BF3237A9CCC00F1E7AA /* DocumentOverview.swift */; };
 		43251BF6237AB33000F1E7AA /* HeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43251BF5237AB33000F1E7AA /* HeadingView.swift */; };
 		432AAE2E237BF68B00EDCE5A /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432AAE2D237BF68B00EDCE5A /* Resource.swift */; };
@@ -47,8 +46,8 @@
 		1F36F1032556E57BB63375A8 /* Pods-TreeOfThings.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreeOfThings.debug.xcconfig"; path = "Target Support Files/Pods-TreeOfThings/Pods-TreeOfThings.debug.xcconfig"; sourceTree = "<group>"; };
 		3B4C3D65237ACE7F00A7DE8F /* Example3.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Example3.org; sourceTree = "<group>"; };
 		3B4C3D66237ACE7F00A7DE8F /* Example4.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Example4.org; sourceTree = "<group>"; };
-		3B4C3D69237ACE9800A7DE8F /* Example1.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Example1.org; sourceTree = "<group>"; };
 		3B4C3D6A237ACE9800A7DE8F /* Example2.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Example2.org; sourceTree = "<group>"; };
+		3BA65FEE237C3297004CEACF /* src_blog_2018_08_08_blogging-with-org-mode.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "src_blog_2018_08_08_blogging-with-org-mode.org"; sourceTree = "<group>"; };
 		3BC62C39237ACCDB00CCE91A /* DocumentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRepository.swift; sourceTree = "<group>"; };
 		3BD42582237AE44000F1F927 /* SubtreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtreeView.swift; sourceTree = "<group>"; };
 		3BD42585237AFC9300F1F927 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -66,7 +65,6 @@
 		430E68C72379653E00B96D78 /* TreeOfThingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeOfThingsTests.swift; sourceTree = "<group>"; };
 		430E68C92379653E00B96D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		430E68D72379939C00B96D78 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		430E68DF23799DDA00B96D78 /* DocumentReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReaderTests.swift; sourceTree = "<group>"; };
 		43251BF3237A9CCC00F1E7AA /* DocumentOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOverview.swift; sourceTree = "<group>"; };
 		43251BF5237AB33000F1E7AA /* HeadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingView.swift; sourceTree = "<group>"; };
 		432AAE2D237BF68B00EDCE5A /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
@@ -99,10 +97,10 @@
 		3BC62C3B237ACD8200CCE91A /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				3B4C3D69237ACE9800A7DE8F /* Example1.org */,
 				3B4C3D6A237ACE9800A7DE8F /* Example2.org */,
 				3B4C3D65237ACE7F00A7DE8F /* Example3.org */,
 				3B4C3D66237ACE7F00A7DE8F /* Example4.org */,
+				3BA65FEE237C3297004CEACF /* src_blog_2018_08_08_blogging-with-org-mode.org */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -166,7 +164,6 @@
 			children = (
 				430E68C72379653E00B96D78 /* TreeOfThingsTests.swift */,
 				430E68C92379653E00B96D78 /* Info.plist */,
-				430E68DF23799DDA00B96D78 /* DocumentReaderTests.swift */,
 			);
 			path = TreeOfThingsTests;
 			sourceTree = "<group>";
@@ -303,7 +300,7 @@
 				430E68BA2379653E00B96D78 /* Preview Assets.xcassets in Resources */,
 				430E68B72379653E00B96D78 /* Assets.xcassets in Resources */,
 				3B4C3D68237ACE7F00A7DE8F /* Example4.org in Resources */,
-				3B4C3D6B237ACE9800A7DE8F /* Example1.org in Resources */,
+				3BA65FEF237C3297004CEACF /* src_blog_2018_08_08_blogging-with-org-mode.org in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +402,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				430E68C82379653E00B96D78 /* TreeOfThingsTests.swift in Sources */,
-				430E68E023799DDA00B96D78 /* DocumentReaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

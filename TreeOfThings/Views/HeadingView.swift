@@ -17,7 +17,7 @@ struct HeadingView: View {
     
     var body: some View {
         if heading.isToggle() {
-            return AnyView(Toggle(isOn: $heading.done) { headingView })
+            return AnyView(Toggle(isOn: $heading.isDone) { headingView })
         } else {
             return AnyView(headingView)
         }

@@ -21,7 +21,7 @@ struct AppView: View {
             })
         case .loading:
             return AnyView(Text("Loading ..."))
-        case .loaded(let documents):
+        case .ok(let documents):
             return AnyView(DocumentListView(documents: documents, onFilesDelete: commander.removeFiles))
         case .failed(_):
             return AnyView(Text("Failed to load Org files."))

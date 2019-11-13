@@ -13,23 +13,73 @@ enum DocumentError: Error {
     case notfound(String)
 }
 
+extension String {
+    func isCheckboxTitle() -> Bool {
+        return self.isCheckboxOn() || self.isCheckboxOff()
+    }
+
+    func getCheckboxTitle() -> String {
+        return self.isCheckboxTitle() ? String(self.dropFirst(4)) : self
+    }
+
+    func isCheckboxOn() -> Bool {
+        return self.starts(with: "[X] ")
+    }
+
+    func isCheckboxOff() -> Bool {
+        return self.starts(with: "[ ] ")
+    }
+}
+
 extension Array where Array.Element == Node {
+    func toContent() -> [Content] {
+        return self.compactMap({
+            $0 is Paragraph ? ($0 as! Paragraph).toContent() : nil
+        })
+    }
+
     func toHeadingTree() -> [Tree<Heading>] {
-        return self
-            .filter({ $0 is Section })
-            .map({ ($0 as! Section).toHeadingTree() })
+        return self.compactMap({
+            $0 is Section ? ($0 as! Section).toHeadingTree() : nil
+        })
     }
 }
 
 extension Section {
-    func toHeadingTree() -> Tree<Heading> {
-        return Tree(Heading(self.title ?? "Untitled Section", level: self.stars), children: self.content.toHeadingTree())
+    func toHeadingTree() -> Optional<Tree<Heading>> {
+        let title = self.title ?? "Untitled Section"
+        var type = HeadingType.simple
+        if (self.keyword == "TODO") {
+            type = HeadingType.todo(.todo)
+        } else if (self.keyword == "DONE") {
+            type = HeadingType.todo(.done)
+        } else if (title.isCheckboxTitle()) {
+            type = HeadingType.checkbox(title.isCheckboxOn())
+        }
+        return Tree(
+            Heading(
+                title.getCheckboxTitle(),
+                level: self.stars,
+                type: type,
+                content: self.content.toContent()
+            ),
+            children: self.content.toHeadingTree()
+        )
+    }
+}
+
+extension Paragraph {
+    func toContent() -> Optional<Content> {
+        return Content(self.text)
     }
 }
 
 extension OrgDocument {
     func toDocument() -> Document {
-        return Document(self.title ?? "Untitled", toc: self.content.toHeadingTree())
+        return Document(
+            self.title ?? "Untitled",
+            toc: self.content.toHeadingTree()
+        )
     }
 }
 
@@ -53,7 +103,7 @@ class DocumentService {
     
     func parse(content: String) -> Resource<OrgDocument> {
         do {
-            return .loaded(try parser.parse(content: content));
+            return .ok(try parser.parse(content: content));
         } catch {
             return .failed(error)
         }

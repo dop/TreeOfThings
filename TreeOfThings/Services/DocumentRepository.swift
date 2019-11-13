@@ -20,6 +20,7 @@ class DocumentRepository {
         
         for path in Bundle.main.paths(forResourcesOfType: "org", inDirectory: nil) {
             documentService.parse(path: path).ifLoaded({ org in
+                print(org)
                 documents.append(org.toDocument())
             })
         }

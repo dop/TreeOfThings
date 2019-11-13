@@ -12,11 +12,14 @@ final class AppState: ObservableObject {
     @Published var documents: Resource<[Document]> = .uninitialized
 }
 
-final class Document: ObservableObject {
+final class Document: Equatable, ObservableObject, CustomStringConvertible {
+    static func == (lhs: Document, rhs: Document) -> Bool {
+        return lhs.title == rhs.title && lhs.toc == rhs.toc
+    }
+
     @Published var id: UUID = UUID()
     @Published var title: String = "Untitled"
     @Published var toc: [Tree<Heading>] = []
-    @Published var sections: [Int:Content] = [:]
     
     init(_ title: String, toc: [Tree<Heading>] = [], id: UUID = UUID()) {
         self.id = id
@@ -36,9 +39,17 @@ final class Document: ObservableObject {
             return headings
         }
     }
+
+    var description: String {
+        return "Document(\(title), toc: \(toc))"
+    }
 }
 
-final class Tree<T> {
+final class Tree<T>: Equatable, CustomStringConvertible where T: Equatable {
+    static func == (lhs: Tree<T>, rhs: Tree<T>) -> Bool {
+        return lhs.node == rhs.node && lhs.children == rhs.children
+    }
+
     var node: T
     var children: [Tree<T>]
     
@@ -46,55 +57,109 @@ final class Tree<T> {
         self.node = node
         self.children = children
     }
+
+    var description: String {
+        return "Tree(\(node), \(children))"
+    }
 }
 
-final class Content: ObservableObject {
+final class Content: Hashable, CustomStringConvertible {
+    static func == (lhs: Content, rhs: Content) -> Bool {
+        return lhs.text == rhs.text
+    }
+
     let id: UUID
-    let value: String
+    let text: String
     
-    init (_ id: UUID, _ value: String) {
+    init (_ text: String, id: UUID = UUID()) {
         self.id = id
-        self.value = value
+        self.text = text
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+    }
+
+    var description: String {
+        return "Content(\(text))"
     }
 }
 
-final class Heading: ObservableObject, Equatable, Hashable, Identifiable {
+enum HeadingType: Equatable {
+    case simple
+    case todo(HeadingTodoType)
+    case checkbox(Bool)
+}
+
+enum HeadingTodoType: Equatable {
+    case todo
+    case done
+}
+
+final class Heading: ObservableObject, Equatable, Hashable, Identifiable, CustomStringConvertible {
     static func == (lhs: Heading, rhs: Heading) -> Bool {
-        return lhs.title == rhs.title && lhs.level == rhs.level
+        return lhs.title == rhs.title && lhs.level == rhs.level && lhs.type == rhs.type && lhs.content == rhs.content
     }
     
-    let id: UUID
-    let level: Int
-    private let rawTitle: String
-    @Published var done: Bool = false
-    
-    var title: String {
-        get {
-            return isToggle() ? String(self.rawTitle.dropFirst(4)) : self.rawTitle
+    @Published var isDone: Bool = false {
+        didSet {
+            switch type {
+                case .checkbox(_):
+                    self.type = .checkbox(isDone)
+                case .todo(_):
+                    self.type = .todo(isDone ? .done : .todo)
+                default:
+                    break
+            }
         }
     }
-    
-    init(_ title: String, level: Int = 0, id: UUID = UUID()) {
+
+    let id: UUID
+    let title: String
+    let level: Int
+    var type: HeadingType
+    let content: [Content]
+
+    init(_ title: String, level: Int = 1, type: HeadingType = .simple, content: [Content] = [], id: UUID = UUID()) {
         self.id = id
-        self.rawTitle = title
+        self.title = title
         self.level = level
-        self.done = isOn()
+        self.type = type
+        self.content = content
+        self.isDone = isToggle() && isChecked()
     }
-    
+
     func isToggle() -> Bool {
-        return isOn() || isOff()
+        switch (type) {
+            case .checkbox(_), .todo(_):
+                return true
+            default:
+                return false
+        }
     }
-    
-    func isOn() -> Bool {
-        return self.rawTitle.starts(with: "[X] ")
+
+    func isChecked() -> Bool {
+        switch type {
+            case .checkbox(let checked):
+                return checked
+            case .todo(let type):
+                switch type {
+                    case .done:
+                        return true
+                    case .todo:
+                        return false
+                }
+            default:
+                return false
+        }
     }
-    
-    func isOff() -> Bool {
-        return self.rawTitle.starts(with: "[ ] ")
-    }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
         hasher.combine(level)
+    }
+
+    var description: String {
+        return "Heading(\(level) \(type) \(title) \(content))"
     }
 }

@@ -9,20 +9,24 @@
 import SwiftUI
 
 struct SubtreeView: View {
-    let title: String
+    let heading: Heading
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("some content")
-                .multilineTextAlignment(.leading)
-            Spacer()
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(heading.content, id: \.self) { item in
+                    Text(item.text)
+                        .multilineTextAlignment(.leading)
+                        .padding()
+                }
+            }
         }
-        .navigationBarTitle(title)
+        .navigationBarTitle(heading.title)
     }
 }
 
 struct SubtreeView_Previews: PreviewProvider {
     static var previews: some View {
-        SubtreeView(title: "Hello")
+        SubtreeView(heading: Heading("Hello"))
     }
 }
