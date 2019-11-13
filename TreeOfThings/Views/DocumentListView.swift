@@ -16,9 +16,9 @@ struct DocumentListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(documents.map {doc in DocumentReader(doc) }) { reader in
-                    NavigationLink(destination: DocumentOverview(reader)) {
-                        Text(reader.title())
+                ForEach(documents, id: \.self.id) { document in
+                    NavigationLink(destination: DocumentOverview(document)) {
+                        Text(document.title)
                     }
                 }
                 .onDelete(perform: onFilesDelete)

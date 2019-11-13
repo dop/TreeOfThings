@@ -19,12 +19,9 @@ class DocumentRepository {
         var documents: [Document] = []
         
         for path in Bundle.main.paths(forResourcesOfType: "org", inDirectory: nil) {
-            switch (documentService.parse(path: path)) {
-            case .ok(let doc):
-                documents.append(doc)
-            default:
-                break
-            }
+            documentService.parse(path: path).ifLoaded({ org in
+                documents.append(org.toDocument())
+            })
         }
         
         return documents

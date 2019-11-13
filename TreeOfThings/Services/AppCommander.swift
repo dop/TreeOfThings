@@ -8,6 +8,24 @@
 
 import Foundation
 
+extension Array {
+    func drop(at index: Int) -> [Array.Element] {
+        var tmp = self
+        tmp.remove(at: index)
+        return tmp
+    }
+    
+    func drop(at offsets: IndexSet) -> [Array.Element] {
+        var tmp = self
+        var offset = 0
+        for index in offsets {
+            tmp.remove(at: index - offset)
+            offset += 1
+        }
+        return tmp
+    }
+}
+
 class AppCommander {
     let state: AppState
     let repository: DocumentRepository
@@ -24,12 +42,6 @@ class AppCommander {
     }
 
     func removeFiles(at offsets: IndexSet) {
-        switch (state.documents) {
-            case .loaded(var documents):
-                documents.remove(atOffsets: offsets)
-                state.documents = Resource.loaded(documents)
-            default:
-                break
-        }
+        state.documents = state.documents.mapLoaded({ $0.drop(at: offsets) })
     }
 }

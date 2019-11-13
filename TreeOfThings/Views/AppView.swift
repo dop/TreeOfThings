@@ -15,14 +15,16 @@ struct AppView: View {
 
     var body: some View {
         switch appState.documents {
-            case .uninitialized:
-                return AnyView(Button(action: commander.loadDocuments) {
-                    Text("Load Org Files")
-                })
-            case .loading:
-                return AnyView(Text("Loading ..."))
-            case .loaded(let documents):
-                return AnyView(DocumentListView(documents: documents, onFilesDelete: commander.removeFiles))
+        case .uninitialized:
+            return AnyView(Button(action: commander.loadDocuments) {
+                Text("Load Org Files")
+            })
+        case .loading:
+            return AnyView(Text("Loading ..."))
+        case .loaded(let documents):
+            return AnyView(DocumentListView(documents: documents, onFilesDelete: commander.removeFiles))
+        case .failed(_):
+            return AnyView(Text("Failed to load Org files."))
         }
     }
 }

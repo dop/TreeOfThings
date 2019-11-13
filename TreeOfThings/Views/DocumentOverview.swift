@@ -1,23 +1,19 @@
 import SwiftUI
 
 struct DocumentOverview: View {
-    let documentReader: DocumentReader
-    
-    init(_ documentReader: DocumentReader) {
-        self.documentReader = documentReader
-    }
+    let document: Document
     
     init(_ doc: Document) {
-        self.documentReader = DocumentReader(doc)
+        self.document = doc
     }
     
     var body: some View {
-        List(documentReader.tableOfContents()) { heading in
+        List(document.headingList) { heading in
             NavigationLink (destination: SubtreeView(title: heading.title)) {
-                HeadingView(heading.title, padding: heading.level)
+                HeadingView(heading)
             }
         }
-        .navigationBarTitle(documentReader.title())
+        .navigationBarTitle(document.title)
     }
 }
 
@@ -28,8 +24,8 @@ struct DocumentOverview_Previews: PreviewProvider {
     
     private static func parseExample(_ resource: String) throws -> Document {
         switch (DocumentService().parse(resource: resource)) {
-        case .ok(let org):
-            return org
+        case .loaded(let org):
+            return org.toDocument()
         default:
             fatalError("Failed to parse resource \"\(resource)\".")
         }

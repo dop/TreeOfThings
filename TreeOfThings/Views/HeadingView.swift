@@ -9,37 +9,26 @@
 import SwiftUI
 
 struct HeadingView: View {
-    let rawTitle: String;
-    let padding: Int
-    let prefix: String
-    @State var done: Bool = false
+    @ObservedObject var heading: Heading
 
-    var title: String {
-        get {
-            return isToggle() ? String(self.rawTitle.dropFirst(4)) : self.rawTitle
-        }
-    }
-
-    init(_ title: String, padding: Int = 0) {
-        self.rawTitle = title
-        self.padding = padding
-        self.prefix = String(repeating: "*", count: self.padding + 1)
+    init(_ heading: Heading) {
+        self.heading = heading
     }
     
     var body: some View {
-        if isToggle() {
-            return AnyView(Toggle(isOn: $done) { heading })
+        if heading.isToggle() {
+            return AnyView(Toggle(isOn: $heading.done) { headingView })
         } else {
-            return AnyView(heading)
+            return AnyView(headingView)
         }
     }
 
-    private var heading: some View {
-        Text(title)
+    private var headingView: some View {
+        Text(heading.title)
             .lineLimit(1)
             .truncationMode(.tail)
-            .padding(.leading, CGFloat(HeadingView.PADDING_STEP * (padding + 1)))
-            .font(fontSize(forPadding: padding))
+            .padding(.leading, CGFloat(HeadingView.PADDING_STEP * (heading.level + 1)))
+            .font(fontSize(forPadding: heading.level))
     }
 
     private static let PADDING_STEP = 15
@@ -58,32 +47,23 @@ struct HeadingView: View {
         }
         return HeadingView.FONT_SIZES.last ?? Font.body
     }
-
-    private func isToggle() -> Bool {
-       return isOn() || isOff()
-    }
-
-    private func isOn() -> Bool {
-        return rawTitle.starts(with: "[X] ")
-    }
-
-    private func isOff() -> Bool {
-        return rawTitle.starts(with: "[ ] ")
-    }
 }
 
 struct HeadingView_Previews: PreviewProvider {
     static let headings = (0..<6).map({ level in
         Heading(
-            id: level,
-            level: level,
-            title: "Example Heading of Level \(level)"
+            "Example Heading of Level \(level)",
+            level: level
         )
     })
     
     static var previews: some View {
-        List(headings) { heading in
-            HeadingView(heading.title, padding: heading.level)
+        VStack {
+            List(headings) { heading in
+                HeadingView(heading)
+            }
+            HeadingView(Heading("[ ] Not Marked"))
+            HeadingView(Heading("[X] Marked"))
         }
     }
 }
