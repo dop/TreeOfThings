@@ -1,15 +1,16 @@
 #+TITLE: Grocery Shopping
+#+date: <2018-08-08 Wed 00:05>
 
 * TODO Breakfast
-** [X] Bread
-** [ ] Cheese
-** [ ] Milk
-** [X] Tomatoes
-** [X] Butter
-** [ ] Blueberry Jam
+- [X] Bread
+- [ ] Cheese
+- [ ] Milk
+- [X] Tomatoes
+- [X] Butter
+- [ ] Blueberry Jam
 * TODO Dinner
-** [ ] Carrots
-** [X] Potatoes
-** [ ] Chickpeas
-** [ ] Soup Spices
-** [ ] Cucumber
+- [ ] Carrots
+- [X] Potatoes
+- [ ] Chickpeas
+- [ ] Soup Spices
+- [ ] Cucumber

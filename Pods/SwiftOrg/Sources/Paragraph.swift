@@ -20,6 +20,10 @@ public struct Paragraph: Node {
     public var description: String {
         return "Paragraph(text: \(text))"
     }
+    
+    public init(lines: [String]) {
+        self.lines = lines
+    }
 }
 
 extension OrgParser {

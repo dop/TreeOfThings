@@ -1,4 +1,5 @@
 #+TITLE: Secret Diary
+#+date: <2018-08-08 Wed 00:05>
 
 * Hello
 ** World

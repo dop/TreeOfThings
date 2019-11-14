@@ -20,11 +20,13 @@ final class Document: Equatable, ObservableObject, CustomStringConvertible {
     @Published var id: UUID = UUID()
     @Published var title: String = "Untitled"
     @Published var toc: [Tree<Heading>] = []
+    let date: String?
     
-    init(_ title: String, toc: [Tree<Heading>] = [], id: UUID = UUID()) {
+    init(_ title: String, toc: [Tree<Heading>] = [], date: String? = nil,  id: UUID = UUID()) {
         self.id = id
         self.title = title
         self.toc = toc
+        self.date = date
     }
     
     var headingList: [Heading] {
@@ -60,28 +62,6 @@ final class Tree<T>: Equatable, CustomStringConvertible where T: Equatable {
 
     var description: String {
         return "Tree(\(node), \(children))"
-    }
-}
-
-final class Content: Hashable, CustomStringConvertible {
-    static func == (lhs: Content, rhs: Content) -> Bool {
-        return lhs.text == rhs.text
-    }
-
-    let id: UUID
-    let text: String
-    
-    init (_ text: String, id: UUID = UUID()) {
-        self.id = id
-        self.text = text
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(text)
-    }
-
-    var description: String {
-        return "Content(\(text))"
     }
 }
 

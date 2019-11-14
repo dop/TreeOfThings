@@ -9,7 +9,7 @@ struct DocumentOverview: View {
     
     var body: some View {
         List(document.headingList) { heading in
-            NavigationLink (destination: SubtreeView(heading: heading)) {
+            NavigationLink (destination: ContentView(heading: heading)) {
                 HeadingView(heading)
             }
         }

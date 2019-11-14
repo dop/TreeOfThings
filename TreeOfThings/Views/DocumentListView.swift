@@ -18,7 +18,14 @@ struct DocumentListView: View {
             List {
                 ForEach(documents, id: \.self.id) { document in
                     NavigationLink(destination: DocumentOverview(document)) {
-                        Text(document.title)
+                        VStack(alignment: .leading) {
+                            Text(document.title)
+                            if document.date != nil {
+                                Text(document.date ?? "")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
                 }
                 .onDelete(perform: onFilesDelete)
