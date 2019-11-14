@@ -54,15 +54,21 @@ struct IndentedItemView: View {
     }
 }
 
+struct ContentListView: View {
+    let content: [Content]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ForEach(content, id: \.self) { $0.toUI() }
+        }
+    }
+}
+
 struct ContentView: View {
     let heading: Heading
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                ForEach(heading.content, id: \.self) { $0.toUI() }
-            }
-        }
+        ScrollView { ContentListView(content: heading.content) }
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .topLeading)
         .padding()
         .navigationBarTitle(heading.title)

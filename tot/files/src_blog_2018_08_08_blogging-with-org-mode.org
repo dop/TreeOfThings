@@ -1,0 +1,109 @@
+#+title: Blogging with Emacs org-mode
+#+date: <2018-08-08 Wed 00:05>
+#+created: <2018-08-08 Wed 00:05>
+#+creator: blog/2018/08/08/blogging-with-org-mode
+#+setupfile: ../../../../include/post.org
+#+keywords: org-mode, emacs, blog
+#+description: Blogging with Emacs org-mode
+
+{{{info(Note:,All pages of this website has been designed in org-mode.
+Not just this blog.  The <a href="https://gitlab.com/sadiq/sadiq.gitlab.io">repository</a>
+contain source code for the complete website.)}}}
+
+* Introduction
+
+For about a year, I have been trying to find a suitable workflow
+to blog using Emacs org-mode.  My idea was to put all
+articles (posts) in a single org file, which failed miserably
+for the following reasons:
+
+- The default org-mode html export is designed to work on separate
+  files.  So single file org export requires custom code which I
+  don't want to write.
+- I wish to link to the source org file from each html article, which
+  is not possible if every article is written in a single file.
+
+Last year, I did write around 500 lines of code, which worked.
+Pretty much all of them were unmaintainable hacks.  A few days back, I
+gave it a try again.  This time, with a different design:
+
+- Each article is written in separate org files, with dated directory names.
+  Eg.: A ~hello-world.org~ file in ~2018/08/08~ dir for /Hello World/ article.
+- Manually created blog index and atom feeds so that I don't have to wait
+  another year to [[https://xkcd.com/974/][pass the salt]].
+
+For the impatient, get the source code [[https://gitlab.com/sadiq/sadiq.gitlab.io][here]].  The complete source code
+(including the sass design style sheets) are released into public domain
+(CC0).  Feel free to use it the way you like.  If you wish to attribute me,
+link to my website [[https://www.sadiqpk.org][www.sadiqpk.org]].
+
+* The work flow
+
+  The following is a barebone example on using Emacs org-mode for blogging.
+  For a practically usable code, see the [[https://gitlab.com/sadiq/sadiq.gitlab.io][source]] of this website.
+
+  - Create a directory for saving your website source, say ~~/web/src/~.
+  - Create an org file with your favorite article, say
+    ~~/web/src/blog/2018/08/08/hello-world.org~ with some content.
+
+    #+begin_src org
+    #+author: Alice
+    #+title: Hello world
+    #+date: <2018-08-08 Wed>
+    #+keywords: hello, world, emacs, blog
+    #+description: Hello world
+
+    I like ~org-mode~.
+    #+end_src
+
+  - Create the project configuration and save it to some file,
+    say ~~/web/src/my-web.el~.
+
+    #+begin_src elisp
+      (require 'org)
+      (setq
+       org-publish-project-alist
+       '(("blog"
+          :base-directory "src/blog"
+          :base-extension "org"
+          :publishing-directory "public/blog"
+          :recursive t
+          :publishing-function org-html-publish-to-html)
+
+         ("website"
+          :components ("blog"))))
+    #+end_src
+
+  The directory structure will look like this:
+
+  #+begin_src sh
+  ~/web/src$ tree
+  .
+  ├── blog
+  │   └── 2018
+  │       └── 08
+  │           └── 08
+  │               └── hello-world.org
+  └── my-web.el
+
+  4 directories, 2 files
+  #+end_src
+  
+  - Now we can publish the project to get the static HTML pages:
+
+    #+begin_src sh
+    ~/web$ emacs --batch -q -l src/my-web.el -f org-publish-all
+    #+end_src
+    
+  That's it.  The ~hello-world.org~ will now be exported as
+  ~~/web/public/blog/2018/08/08/hello-world.html~.
+  
+* Conclusion
+
+  This is an overly simplified example.  To see how the
+  [[https://www.sadiqpk.org/blog/2018/08/08/hello-world.html][Hello World]] blog post is written, see its [[https://gitlab.com/sadiq/sadiq.gitlab.io/raw/master/src/blog/2018/08/08/hello-world.org][source]].  Also
+  see the project [[https://gitlab.com/sadiq/sadiq.gitlab.io/blob/master/src/my-web.el][configuration file]] and atom feed generation
+  [[https://gitlab.com/sadiq/sadiq.gitlab.io/blob/master/src/blog-atom.sh][script]].
+
+
+  *Update:* See {{{hn(17714815,Hacker News discussion)}}}.

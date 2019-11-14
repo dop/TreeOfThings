@@ -17,7 +17,7 @@ struct DocumentListView: View {
         NavigationView {
             List {
                 ForEach(documents, id: \.self.id) { document in
-                    NavigationLink(destination: DocumentOverview(document)) {
+                    NavigationLink(destination: DocumentView(document: document)) {
                         VStack(alignment: .leading) {
                             Text(document.title)
                             if document.date != nil {

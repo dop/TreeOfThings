@@ -10,7 +10,7 @@ struct DocumentOverview: View {
     var body: some View {
         List(document.headingList) { heading in
             NavigationLink (destination: ContentView(heading: heading)) {
-                HeadingView(heading)
+                IndentedHeadingView(heading)
             }
         }
         .navigationBarTitle(document.title)
